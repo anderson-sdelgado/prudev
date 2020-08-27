@@ -19,7 +19,7 @@ class EquipDAO extends Conn {
     /** @var PDO */
     private $Conn;
 
-    public function dados($equip) {
+    public function dados() {
 
         $select = " SELECT "
                 . " E.EQUIP_ID AS \"idEquip\" "

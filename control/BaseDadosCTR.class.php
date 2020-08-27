@@ -14,8 +14,9 @@ require_once('../model/dao/LiderDAO.class.php');
 require_once('../model/dao/OSDAO.class.php');
 require_once('../model/dao/OrganFitoDAO.class.php');
 require_once('../model/dao/ParadaDAO.class.php');
+require_once('../model/dao/RFuncaoAtivParDAO.class.php');
+require_once('../model/dao/ROCAFitoDAO.class.php');
 require_once('../model/dao/ROSAtivDAO.class.php');
-require_once('../model/dao/ROrganCaracAmosFitoDAO.class.php');
 require_once('../model/dao/TalhaoDAO.class.php');
 require_once('../model/dao/TipoApontDAO.class.php');
 require_once('../model/dao/TurmaDAO.class.php');
@@ -129,26 +130,26 @@ class BaseDadosCTR {
     }
     
     
-    public function verifOS($info, $versao) {
+    public function dadosOS($versao, $info) {
 
         $versao = str_replace("_", ".", $versao);
         
-        $osDAO = new OSDAO();
-        $rOSAtivDAO = new ROSAtivDAO();
-        
         if($versao >= 2.00){
         
+            $osDAO = new OSDAO();
+            $rOSAtivDAO = new ROSAtivDAO();
+
             $dado = $info['dado'];
 
-            $dadosOS = array("dados" => $osDAO->verif($dado));
+            $dadosOS = array("dados" => $osDAO->dados($dado));
             $resOS = json_encode($dadosOS);
 
-            $dadosROSAtivDAO = array("dados" => $rOSAtivDAO->verif($dado));
-            $resROSAtivDAO = json_encode($dadosROSAtivDAO);
+            $dadosROSAtiv = array("dados" => $rOSAtivDAO->dados($dado));
+            $resROSAtiv = json_encode($dadosROSAtiv);
 
-            return $resOS . "_" . $resROSAtivDAO;
-
-        }        
+            return $resOS . "#" . $resROSAtiv;
+        
+        }
         
     }
     
@@ -185,6 +186,23 @@ class BaseDadosCTR {
         
     }
     
+     public function dadosRFuncaoAtivPar($versao) {
+        
+        $versao = str_replace("_", ".", $versao);
+        
+        $rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
+        
+        if($versao >= 2.00){
+        
+            $dados = array("dados"=>$rFuncaoAtivParDAO->dados());
+            $json_str = json_encode($dados);
+
+            return $json_str;
+        
+        }
+        
+    }
+    
     public function dadosROSAtiv($versao) {
         
         $versao = str_replace("_", ".", $versao);
@@ -202,15 +220,15 @@ class BaseDadosCTR {
         
     }
     
-    public function dadosROrganCaracAmosFito($versao) {
+    public function dadosROCAFito($versao) {
         
         $versao = str_replace("_", ".", $versao);
         
-        $rOrganCaracAmosFitoDAO = new ROrganCaracAmosFitoDAO();
+        $rOCAFitoDAO = new ROCAFitoDAO();
 
         if($versao >= 2.00){
 
-            $dados = array("dados"=>$rOrganCaracAmosFitoDAO->dados());
+            $dados = array("dados"=>$rOCAFitoDAO->dados());
             $json_str = json_encode($dados);
 
             return $json_str;

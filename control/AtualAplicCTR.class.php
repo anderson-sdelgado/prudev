@@ -14,14 +14,48 @@ require('../model/dao/AtualAplicDAO.class.php');
 class AtualAplicCTR {
     //put your code here
     
-    public function verAtualAplic($info) {
+    
+    public function atualAplic($versao, $info) {
 
-        $atualAplicDAO = new AtualAplicDAO();
+        $versao = str_replace("_", ".", $versao);
+        
+        if($versao >= 2.00){
+        
+            $atualAplicDAO = new AtualAplicDAO();
 
-        $jsonObj = json_decode($info['dado']);
-        $dados = $jsonObj->dados;
-        $dadosAtualAplic = $atualAplicDAO->verAtualAplic($dados);
-        return $dadosAtualAplic;
+            $jsonObj = json_decode($info['dado']);
+            $dados = $jsonObj->dados;
+
+            foreach ($dados as $d) {
+                $celular = $d->idCelularAtual;
+                $va = $d->versaoAtual;
+            }
+            $retorno = 'N';
+            $v = $atualAplicDAO->verAtual($celular);
+            if ($v == 0) {
+                $atualAplicDAO->insAtual($celular, $va);
+            } else {
+                $result = $atualAplicDAO->retAtual($celular);
+                foreach ($result as $item) {
+                    $vn = $item['VERSAO_NOVA'];
+                    $vab = $item['VERSAO_ATUAL'];
+                }
+                if ($va != $vab) {
+                    $atualAplicDAO->updAtualNova($celular, $va);
+                } else {
+                    if ($va != $vn) {
+                        $retorno = 'S';
+                    }
+                }
+            }
+            $dthr = $atualAplicDAO->dataHora();
+            if ($retorno == 'S') {
+                return $retorno;
+            } else {
+                return $retorno . "#" . $dthr;
+            }
+        
+        }
         
     }
     

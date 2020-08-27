@@ -6,7 +6,6 @@
  * and open the template in the editor.
  */
 require_once ('../dbutil/Conn.class.php');
-
 /**
  * Description of AlocaFuncDAO
  *
@@ -25,7 +24,7 @@ class AlocaFuncDAO extends Conn {
                 . " WHERE "
                 . " DTHR = TO_DATE('" . $alocFunc->dthrAlocaFunc . "','DD/MM/YYYY HH24:MI') "
                 . " AND "
-                . " FUNC_MATRIC = " . $alocFunc->codFuncionarioAlocaFunc
+                . " FUNC_MATRIC = " . $alocFunc->matricFuncAlocaFunc
                 . " AND "
                 . " BOLETIM_ID = " . $idBol;
 
@@ -53,7 +52,7 @@ class AlocaFuncDAO extends Conn {
                 . " ) "
                 . " VALUES ("
                 . " " . $idBol
-                . " , " . $alocFunc->codFuncionarioAlocaFunc
+                . " , " . $alocFunc->matricFuncAlocaFunc
                 . " , " . $alocFunc->tipoAlocaFunc
                 . " , TO_DATE('" . $alocFunc->dthrAlocaFunc . "','DD/MM/YYYY HH24:MI') "
                 . " , SYSDATE "

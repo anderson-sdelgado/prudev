@@ -6,4 +6,4 @@ require_once('../control/BaseDadosCTR.class.php');
 
 $baseDadosCTR = new BaseDadosCTR();
 
-echo $baseDadosCTR->dadosROrganCaracAmosFito($versao);
+echo $baseDadosCTR->dadosROCAFito($versao);

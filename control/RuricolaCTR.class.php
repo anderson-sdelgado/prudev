@@ -16,10 +16,8 @@ require_once('../model/dao/AlocaFuncDAO.class.php');
  */
 class RuricolaCTR {
     //put your code here
-    
 
-    //put your code here
-    public function salvarDadosBolAberto($info, $pagina) {
+    public function salvarDados($info, $pagina) {
 
         $dados = $info['dado'];
         $this->salvarLog($dados, $pagina);
@@ -39,53 +37,9 @@ class RuricolaCTR {
         $dadosAponta = $jsonObjAponta->aponta;
         $dadosAlocaFunc = $jsonObjAlocaFunc->alocafunc;
 
-        $idBol = $this->salvarBolAberto($dadosBoletim, $dadosAponta, $dadosAlocaFunc);
+        $ret = $this->salvarBolFechado($dadosBoletim, $dadosAponta, $dadosAlocaFunc);
 
-        return "GRAVOU+id=" . $idBol . "_";
-    }
-
-    public function salvarDadosApont($info, $pagina) {
-
-        $dados = $info['dado'];
-        $pos1 = strpos($dados, "|") + 1;
-
-        $apont = substr($dados, 0, ($pos1 - 1));
-        $alocFunc = substr($dados, $pos1);
-
-        $jsonObjAponta = json_decode($apont);
-        $jsonObjAlocaFunc = json_decode($alocFunc);
-
-        $dadosAponta = $jsonObjAponta->aponta;
-        $dadosAlocaFunc = $jsonObjAlocaFunc->alocafunc;
-
-        $this->salvarApont($dadosAponta, $dadosAlocaFunc);
-
-        return 'GRAVOU-APONTAMM';
-    }
-
-    public function salvarDadosBolFechado($info, $pagina) {
-
-        $dados = $info['dado'];
-        $this->salvarLog($dados, $pagina);
-
-        $pos1 = strpos($dados, "_") + 1;
-        $pos2 = strpos($dados, "|") + 1;
-
-        $bol = substr($dados, 0, ($pos1 - 1));
-        $apont = substr($dados, $pos1, (($pos2 - 1) - $pos1));
-        $alocFunc = substr($dados, $pos2);
-
-        $jsonObjBoletim = json_decode($bol);
-        $jsonObjAponta = json_decode($apont);
-        $jsonObjAlocaFunc = json_decode($alocFunc);
-
-        $dadosBoletim = $jsonObjBoletim->boletim;
-        $dadosAponta = $jsonObjAponta->aponta;
-        $dadosAlocaFunc = $jsonObjAlocaFunc->alocafunc;
-
-        $this->salvarBolFechado($dadosBoletim, $dadosAponta, $dadosAlocaFunc);
-
-        return 'GRAVOU-BOLFECHADO';
+        return $ret;
     }
 
     private function salvarLog($dados, $pagina) {
@@ -95,57 +49,28 @@ class RuricolaCTR {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private function salvarBolAberto($dadosBoletim, $dadosAponta, $dadosAlocaFunc) {
-        $boletimDAO = new BoletimDAO();
-        foreach ($dadosBoletim as $bol) {
-            $v = $boletimDAO->verifBoletim($bol);
-            if ($v == 0) {
-                $boletimDAO->insBoletimAberto($bol);
-            }
-            $idBol = $boletimDAO->idBoletim($bol);
-            $this->salvarApontBol($idBol, $bol->idBoletim, $dadosAponta);
-            $this->salvarAlocFunc($idBol, $bol->idBoletim, $dadosAlocaFunc);
-        }
-        return $idBol;
-    }
-
     private function salvarBolFechado($dadosBoletim, $dadosAponta, $dadosAlocaFunc) {
         $boletimDAO = new BoletimDAO();
+        $idBoletimArray = array();
         foreach ($dadosBoletim as $bol) {
             $v = $boletimDAO->verifBoletim($bol);
             if ($v == 0) {
-                $boletimDAO->insBoletimFechado($bol);
-                $idBol = $boletimDAO->idBoletim($bol);
-            } else {
-                $idBol = $boletimDAO->idBoletim($bol);
-                $boletimDAO->altBoletimFechado($idBol, $bol);
+                $boletimDAO->insBoletim($bol);
             }
-            $this->salvarApontBol($idBol, $bol->idBoletim, $dadosAponta);
-            $this->salvarAlocFunc($idBol, $bol->idBoletim, $dadosAlocaFunc);
+            $idBol = $boletimDAO->idBoletim($bol);
+            $this->salvarApont($idBol, $bol->idBol, $dadosAponta);
+            $this->salvarAlocFunc($idBol, $bol->idBol, $dadosAlocaFunc);
+            $idBoletimArray[] = array("idBol" => $bol->idBol);
         }
+        $dadoBol = array("boletim"=>$idBoletimArray);
+        $retBol = json_encode($dadoBol);
+        return 'GRAVOU-RURICOLA_' . $retBol;
     }
 
-    private function salvarApont($dadosAponta, $dadosAlocaFunc) {
-        $alocaFuncDAO = new AlocaFuncDAO();
-        foreach ($dadosAlocaFunc as $alocaFunc) {
-            $v = $alocaFuncDAO->verifAlocaFunc($alocaFunc->idExtBolAlocaFunc, $alocaFunc);
-            if ($v == 0) {
-                $alocaFuncDAO->insAlocaFunc($alocaFunc->idExtBolAlocaFunc, $alocaFunc);
-            }
-        }
+    private function salvarApont($idBolBD, $idBolCel, $dadosAponta) {
         $apontDAO = new ApontDAO();
         foreach ($dadosAponta as $apont) {
-            $v = $apontDAO->verifApont($apont->idExtBolAponta, $apont);
-            if ($v == 0) {
-                $apontDAO->insApont($apont->idExtBolAponta, $apont);
-            }
-        }
-    }
-
-    private function salvarApontBol($idBolBD, $idBolCel, $dadosAponta) {
-        $apontDAO = new ApontDAO();
-        foreach ($dadosAponta as $apont) {
-            if ($idBolCel == $apont->idBolAponta) {
+            if ($idBolCel == $apont->idBolApont) {
                 $v = $apontDAO->verifApont($idBolBD, $apont);
                 if ($v == 0) {
                     $apontDAO->insApont($idBolBD, $apont);

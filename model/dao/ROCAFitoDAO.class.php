@@ -5,13 +5,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require_once 'Conn.class.php';
+require_once ('../dbutil/Conn.class.php');
 /**
  * Description of ROrganismoCaracDAO
  *
  * @author anderson
  */
-class ROrganCaracAmosFitoDAO extends Conn {
+class ROCAFitoDAO extends Conn {
     //put your code here
     
     /** @var PDOStatement */

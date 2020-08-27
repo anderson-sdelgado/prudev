@@ -20,14 +20,16 @@ class ROSAtivDAO extends Conn {
     /** @var PDO */
     private $Conn;
 
-    public function dados() {
+    public function dados($os) {
 
         $select = " SELECT "
                 . " ROWNUM AS \"idROSAtiv\" "
                 . " , NRO_OS AS \"nroOS\" "
-                . " , ATIVAGR_CD AS \"codAtiv\" "
+                . " , ATIVAGR_ID AS \"idAtiv\" "
                 . " FROM "
-                . " USINAS.V_SIMOVA_OS ";
+                    . " USINAS.V_SIMOVA_OS_MANUAL "
+                . " WHERE "
+                    . " NRO_OS = " . $os;
         
         $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);

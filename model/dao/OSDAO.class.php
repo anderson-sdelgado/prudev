@@ -20,32 +20,16 @@ class OSDAO extends Conn {
     /** @var PDO */
     private $Conn;
 
-    public function dados() {
-
-        $select = " SELECT DISTINCT "
-                . " NRO_OS AS \"nroOS\" "
-                . " , PROPRAGR_CD AS \"codSecao\" "
-                . " , PROPRAGR_DESCR AS \"descrSecao\" "
-                . " , FRENTE_ID AS \"idFrente\" "
-                . " , FRENTE_DESCR AS \"descrFrente\" "
-                . " FROM "
-                . " USINAS.V_SIMOVA_OS_MANUAL ";
-        
-        $this->Conn = parent::getConn();
-        $this->Read = $this->Conn->prepare($select);
-        $this->Read->setFetchMode(PDO::FETCH_ASSOC);
-        $this->Read->execute();
-        $result = $this->Read->fetchAll();
-
-        return $result;
-    }
     
-    public function verif($os) {
+    public function dados($os) {
 
         $select = " SELECT DISTINCT "
                     . " NRO_OS AS \"nroOS\" "
-                    . " , PROPRAGR_CD AS \"codSecao\" "
-                    . " , PROPRAGR_DESCR AS \"descrSecao\" "
+                    . " , NVL(PROPRAGR_ID, 0) AS \"idSecao\" "
+                    . " , NVL(PROPRAGR_CD, 0) AS \"codSecao\" "
+                    . " , NVL(PROPRAGR_DESCR, 'NULO') AS \"descrSecao\" "
+                    . " , NVL(FRENTE_ID, 0) AS \"idFrente\" "
+                    . " , NVL(FRENTE_DESCR, 'NULO') AS \"descrFrente\" "
                 . " FROM "
                     . " USINAS.V_SIMOVA_OS_MANUAL "
                 . " WHERE "

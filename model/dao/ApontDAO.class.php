@@ -6,15 +6,12 @@
  * and open the template in the editor.
  */
 require_once ('../dbutil/Conn.class.php');
-
 /**
  * Description of ApontDAO
  *
  * @author anderson
  */
 class ApontDAO extends Conn {
-
-    //put your code here
 
     public function verifApont($idBol, $apont) {
 
@@ -23,9 +20,9 @@ class ApontDAO extends Conn {
                 . " FROM "
                 . " PRU_APONTAMENTO "
                 . " WHERE "
-                . " DTHR = TO_DATE('" . $apont->dthrAponta . "','DD/MM/YYYY HH24:MI') "
+                . " DTHR = TO_DATE('" . $apont->dthrApont . "','DD/MM/YYYY HH24:MI') "
                 . " AND "
-                . " FUNC_MATRIC = " . $apont->funcAponta
+                . " FUNC_MATRIC = " . $apont->funcApont
                 . " AND "
                 . " BOLETIM_ID = " . $idBol;
 
@@ -44,20 +41,20 @@ class ApontDAO extends Conn {
 
     public function insApont($idBol, $apont) {
 
-        if (!isset($apont->paradaAponta) || empty($apont->paradaAponta)) {
-            $apont->paradaAponta = "null";
+        if (!isset($apont->paradaApont) || empty($apont->paradaApont)) {
+            $apont->paradaApont = "null";
         } else {
-            if ($apont->paradaAponta == 0) {
-                $apont->paradaAponta = "null";
+            if ($apont->paradaApont == 0) {
+                $apont->paradaApont = "null";
             }
         }
 
-        if (!isset($apont->ativAponta) || empty($apont->ativAponta)) {
-            $apont->ativAponta = "null";
+        if (!isset($apont->ativApont) || empty($apont->ativApont)) {
+            $apont->ativApont = "null";
         }
 
-        if (!isset($apont->osAponta) || empty($apont->osAponta)) {
-            $apont->osAponta = "null";
+        if (!isset($apont->osApont) || empty($apont->osApont)) {
+            $apont->osApont = "null";
         }
 
         $sql = "INSERT INTO PRU_APONTAMENTO ("
@@ -71,12 +68,12 @@ class ApontDAO extends Conn {
                 . " ) "
                 . " VALUES ("
                 . " " . $idBol
-                . " , " . $apont->osAponta
-                . " , " . $apont->ativAponta
-                . " , " . $apont->paradaAponta
-                . " , TO_DATE('" . $apont->dthrAponta . "','DD/MM/YYYY HH24:MI') "
+                . " , " . $apont->osApont
+                . " , " . $apont->ativApont
+                . " , " . $apont->paradaApont
+                . " , TO_DATE('" . $apont->dthrApont . "','DD/MM/YYYY HH24:MI') "
                 . " , SYSDATE "
-                . " , " . $apont->funcAponta
+                . " , " . $apont->funcApont
                 . " )";
 
         $this->Conn = parent::getConn();

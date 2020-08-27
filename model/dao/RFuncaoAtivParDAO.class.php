@@ -5,13 +5,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require_once ('../dbutil/Conn.class.php');
+require_once('../dbutil/Conn.class.php');
 /**
- * Description of AmostraOrganismoDAO
+ * Description of RFuncaoAtivPar
  *
  * @author anderson
  */
-class OrganFitoDAO extends Conn {
+class RFuncaoAtivParDAO extends Conn  {
     //put your code here
     
     /** @var PDOStatement */
@@ -22,12 +22,18 @@ class OrganFitoDAO extends Conn {
 
     public function dados() {
 
-        $select = " SELECT DISTINCT "
-                    . " ORGDANINHO_ID AS \"idOrgan\" "
-                    . " , CD AS \"codOrgan\" "
-                    . " , CARACTER(DESCR) AS \"descrOrgan\" "
+        $select = " SELECT "
+                    . " ATIVAGR_ID AS \"idAtivPar\" "
+                    . " , CASE "
+                    . " WHEN A.ATIVAGR_ID = 631 THEN 1 "
+                    . " WHEN A.ATIVAGR_ID = 648 THEN 2 "
+                    . " WHEN A.ATIVAGR_ID = 651 THEN 3 "
+                    . " END AS \"codFuncao\" "
+                    . " , 1  AS \"tipoFuncao\" "
                 . " FROM "
-                    . " USINAS.V_INFEST_ORGAN ";
+                    . " USINAS.V_SIMOVA_ATIVAGR_NEW A "
+                . " WHERE "
+                    . " A.ATIVAGR_ID IN (648, 631, 651) ";
         
         $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);
