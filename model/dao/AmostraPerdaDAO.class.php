@@ -41,77 +41,77 @@ class AmostraPerdaDAO extends Conn {
     public function insAmostra($idCabec, $amostra) {
         
         $tara = '';
-        if ($a->taraAmostraPerda == 0) {
+        if ($amostra->taraAmostraPerda == 0) {
             $tara = "null";
         } else {
             $tara = $amostra->taraAmostraPerda;
         }
 
         $tolete = '';
-        if ($a->toleteAmostraPerda == 0) {
+        if ($amostra->toleteAmostraPerda == 0) {
             $tolete = "null";
         } else {
-            $tolete = ($a->toleteAmostraPerda - $a->taraAmostraPerda);
+            $tolete = ($amostra->toleteAmostraPerda - $amostra->taraAmostraPerda);
         }
 
         $canaInteira = '';
-        if ($a->canaInteiraAmostraPerda == 0) {
+        if ($amostra->canaInteiraAmostraPerda == 0) {
             $canaInteira = "null";
         } else {
-            $canaInteira = ($a->canaInteiraAmostraPerda - $a->taraAmostraPerda);
+            $canaInteira = ($amostra->canaInteiraAmostraPerda - $amostra->taraAmostraPerda);
         }
 
         $toco = '';
-        if ($a->tocoAmostraPerda == 0) {
+        if ($amostra->tocoAmostraPerda == 0) {
             $toco = "null";
         } else {
-            $toco = ($a->tocoAmostraPerda - $a->taraAmostraPerda);
+            $toco = ($amostra->tocoAmostraPerda - $amostra->taraAmostraPerda);
         }
 
         $pedaco = '';
-        if ($a->pedacoAmostraPerda == 0) {
+        if ($amostra->pedacoAmostraPerda == 0) {
             $pedaco = "null";
         } else {
-            $pedaco = ($a->pedacoAmostraPerda - $a->taraAmostraPerda);
+            $pedaco = ($amostra->pedacoAmostraPerda - $amostra->taraAmostraPerda);
         }
 
         $repique = '';
-        if ($a->repiqueAmostraPerda == 0) {
+        if ($amostra->repiqueAmostraPerda == 0) {
             $repique = "null";
         } else {
-            $repique = ($a->repiqueAmostraPerda - $a->taraAmostraPerda);
+            $repique = ($amostra->repiqueAmostraPerda - $amostra->taraAmostraPerda);
         }
 
         $ponteiro = '';
-        if ($a->ponteiroAmostraPerda == 0) {
+        if ($amostra->ponteiroAmostraPerda == 0) {
             $ponteiro = "null";
         } else {
-            $ponteiro = ($a->ponteiroAmostraPerda - $a->taraAmostraPerda);
+            $ponteiro = ($amostra->ponteiroAmostraPerda - $amostra->taraAmostraPerda);
         }
 
         $lascas = '';
-        if ($a->lascasAmostraPerda == 0) {
+        if ($amostra->lascasAmostraPerda == 0) {
             $lascas = "null";
         } else {
-            $lascas = ($a->lascasAmostraPerda - $a->taraAmostraPerda);
+            $lascas = ($amostra->lascasAmostraPerda - $amostra->taraAmostraPerda);
         }
 
         $sql = "INSERT INTO PRU_PERDA_AMOSTRA ( "
-                . " IDCABEC "
-                . " , NUM "
+                . " CABEC_ID "
+                . " , SEQ "
                 . " , TARA "
                 . " , TOLETE "
-                . " , CANAINTEIRA "
+                . " , CANA_INTEIRA "
                 . " , TOCO "
                 . " , PEDACO "
                 . " , REPIQUE "
                 . " , PONTEIRO "
                 . " , LASCAS "
-                . " , SOQUEIRAKG "
-                . " , SOQUEIRANUM "
+                . " , SOQUEIRA_KG "
+                . " , SOQUEIRA_NUM "
                 . " , PEDRA "
-                . " , TOCOARVORE "
-                . " , PLDANINHAS "
+                . " , TOCO_ARVORE "
+                . " , PLANTA_DANINHAS "
                 . " , FORMIGUEIRO "
                 . " ) VALUES( "
                 . " " . $idCabec

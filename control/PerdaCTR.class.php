@@ -64,7 +64,7 @@ class PerdaCTR {
     private function salvarAmostra($idCabecBD, $idCabecCel, $dadosAmostra) {
         $amostraPerdaDAO = new AmostraPerdaDAO();
         foreach ($dadosAmostra as $amostra) {
-            if ($idCabecCel == $amostra->idCabecAmostra) {
+            if ($idCabecCel == $amostra->idCabecAmostraPerda) {
                 $v = $amostraPerdaDAO->verifAmostra($idCabecBD, $amostra);
                 if ($v == 0) {
                     $amostraPerdaDAO->insAmostra($idCabecBD, $amostra);

@@ -62,7 +62,7 @@ class SoqueiraCTR {
     private function salvarAmostra($idCabecBD, $idCabecCel, $dadosAmostra) {
         $amostraSoqueiraDAO = new AmostraSoqueiraDAO();
         foreach ($dadosAmostra as $amostra) {
-            if ($idCabecCel == $amostra->idCabecAmostra) {
+            if ($idCabecCel == $amostra->idCabecAmostraSoqueira) {
                 $v = $amostraSoqueiraDAO->verifAmostra($idCabecBD, $amostra);
                 if ($v == 0) {
                     $amostraSoqueiraDAO->insAmostra($idCabecBD, $amostra);

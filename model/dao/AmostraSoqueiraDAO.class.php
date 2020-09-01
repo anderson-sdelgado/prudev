@@ -43,11 +43,11 @@ class AmostraSoqueiraDAO extends Conn {
         $sql = "INSERT INTO PRU_SOQUEIRA_AMOSTRA ( "
                 . " CABEC_ID "
                 . " , SEQ "
-                . " , TARA "
-                . " , TOLETE "
+                . " , QTDE_SOQUEIRA "
+                . " , QTDE_ARRANQUIO "
                 . " ) VALUES( "
                 . " " . $idCabec
-                . " , " . $amostra->seqAmostraPerda
+                . " , " . $amostra->seqAmostraSoqueira
                 . " , " . $amostra->qtdeSoqueira
                 . " , " . $amostra->qtdeArranquio
                 . " )";
