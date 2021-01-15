@@ -62,7 +62,7 @@ class AtualAplicDAO extends Conn {
         $this->Create->execute();
     }
 
-    public function retAtual($equip) {
+    public function retAtual($celular) {
 
         $select = " SELECT "
                 . " VERSAO_NOVA"
@@ -70,7 +70,7 @@ class AtualAplicDAO extends Conn {
                 . " FROM "
                 . " PRU_ATUALIZACAO "
                 . " WHERE "
-                . " NUMERO_LINHA = " . $equip;
+                . " NUMERO_LINHA = " . $celular;
 
         $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);
@@ -83,7 +83,7 @@ class AtualAplicDAO extends Conn {
 
     public function updAtualNova($equip, $va) {
 
-        $sql = "UPDATE PMM_ATUALIZACAO "
+        $sql = "UPDATE PRU_ATUALIZACAO "
                 . " SET "
                 . " VERSAO_ATUAL = TRIM(TO_CHAR(" . $va . ", '99999999D99'))"
                 . " , VERSAO_NOVA = TRIM(TO_CHAR(" . $va . ", '99999999D99'))"
