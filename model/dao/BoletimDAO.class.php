@@ -22,7 +22,7 @@ class BoletimDAO extends Conn {
                 . " WHERE "
                 . " DTHR_INICIAL = TO_DATE('" . $bol->dthrInicioBol . "','DD/MM/YYYY HH24:MI') "
                 . " AND "
-                . " LIDER_MATRIC = " . $bol->idLiderBol;
+                . " LIDER_MATRIC = " . $bol->matricLiderBol;
 
         $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);
@@ -46,7 +46,7 @@ class BoletimDAO extends Conn {
                 . " WHERE "
                 . " DTHR_INICIAL = TO_DATE('" . $bol->dthrInicioBol . "','DD/MM/YYYY HH24:MI') "
                 . " AND "
-                . " LIDER_MATRIC = " . $bol->idLiderBol;
+                . " LIDER_MATRIC = " . $bol->matricLiderBol;
 
         $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);
@@ -76,7 +76,7 @@ class BoletimDAO extends Conn {
                 . " , SIT "
                 . " ) "
                 . " VALUES ("
-                . " " . $bol->idLiderBol
+                . " " . $bol->matricLiderBol
                 . " , " . $bol->idTurmaBol
                 . " , " . $bol->osBol
                 . " , " . $bol->ativPrincBol

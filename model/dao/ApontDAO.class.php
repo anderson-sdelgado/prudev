@@ -22,7 +22,7 @@ class ApontDAO extends Conn {
                 . " WHERE "
                 . " DTHR = TO_DATE('" . $apont->dthrApont . "','DD/MM/YYYY HH24:MI') "
                 . " AND "
-                . " FUNC_MATRIC = " . $apont->idFuncApont
+                . " FUNC_MATRIC = " . $apont->matricFuncApont
                 . " AND "
                 . " BOLETIM_ID = " . $idBol;
                         
@@ -73,7 +73,7 @@ class ApontDAO extends Conn {
                 . " , " . $apont->paradaApont
                 . " , TO_DATE('" . $apont->dthrApont . "','DD/MM/YYYY HH24:MI') "
                 . " , SYSDATE "
-                . " , " . $apont->idFuncApont
+                . " , " . $apont->matricFuncApont
                 . " )";
 
         $this->Conn = parent::getConn();
