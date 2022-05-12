@@ -12,9 +12,8 @@ require_once ('../dbutil/Conn.class.php');
  * @author anderson
  */
 class RespFitoDAO extends Conn {
-    //put your code here
     
-        public function verifResp($idCabec, $resp) {
+    public function verifResp($idCabec, $resp) {
 
         $select = " SELECT "
                 . " COUNT(ITIMPFEST_ID) AS QTDE "

@@ -16,10 +16,9 @@ require_once('../model/dao/AmostraPerdaDAO.class.php');
 class PerdaCTR {
     //put your code here
     
-    public function salvarDados($info, $pagina) {
+    public function salvarDados($info) {
 
         $dados = $info['dado'];
-        $this->salvarLog($dados, $pagina);
 
         $pos1 = strpos($dados, "_") + 1;
 
@@ -33,14 +32,9 @@ class PerdaCTR {
         $dadosAmostra = $jsonObjAmostra->amostra;
 
         $ret = $this->salvarCabec($dadosCabec, $dadosAmostra);
-
         return $ret;
     }
 
-    private function salvarLog($dados, $pagina) {
-        $logDAO = new LogDAO();
-        $logDAO->salvarDados($dados, $pagina);
-    }
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 

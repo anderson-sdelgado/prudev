@@ -22,14 +22,14 @@ class EquipDAO extends Conn {
     public function dados() {
 
         $select = " SELECT "
-                . " E.EQUIP_ID AS \"idEquip\" "
-                . " , E.NRO_EQUIP AS \"nroEquip\" "
-                . " , E.CLASSOPER_CD AS \"codClasseEquip\" "
-                . " , CARACTER(E.CLASSOPER_DESCR) AS \"descrClasseEquip\" "
-                . " FROM "
-                . " V_EQUIP E "
-                . " WHERE  "
-                . " E.CLASSOPER_CD = 2 ";
+                        . " E.EQUIP_ID AS \"idEquip\" "
+                        . " , E.NRO_EQUIP AS \"nroEquip\" "
+                        . " , E.CLASSOPER_CD AS \"codClasseEquip\" "
+                        . " , CARACTER(E.CLASSOPER_DESCR) AS \"descrClasseEquip\" "
+                    . " FROM "
+                        . " V_EQUIP E "
+                    . " WHERE  "
+                        . " E.CLASSOPER_CD = 2 ";
 
         $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);

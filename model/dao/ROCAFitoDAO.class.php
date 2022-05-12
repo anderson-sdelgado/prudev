@@ -12,7 +12,6 @@ require_once ('../dbutil/Conn.class.php');
  * @author anderson
  */
 class ROCAFitoDAO extends Conn {
-    //put your code here
     
     /** @var PDOStatement */
     private $Read;

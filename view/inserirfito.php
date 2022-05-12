@@ -7,6 +7,6 @@ $info = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 if (isset($info)):
 
     $fitoCTR = new FitoCTR();
-    echo $fitoCTR->salvarDados($info, "inserirfito");
+    echo $fitoCTR->salvarDados($info);
     
 endif;

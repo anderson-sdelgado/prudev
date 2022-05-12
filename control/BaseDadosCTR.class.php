@@ -27,264 +27,174 @@ require_once('../model/dao/TurmaDAO.class.php');
  */
 class BaseDadosCTR {
     
-    public function dadosAmostraFito($versao) {
-        
-        $versao = str_replace("_", ".", $versao);
-        
-        $amostraFitoDAO = new AmostraFitoDAO();
-        
-        if($versao >= 2.00){
-        
-            $dados = array("dados"=>$amostraFitoDAO->dados());
-            $json_str = json_encode($dados);
+    public function dadosAmostraFito() {
 
-            return $json_str;
-        
-        }
-        
+        $amostraFitoDAO = new AmostraFitoDAO();
+
+        $dados = array("dados"=>$amostraFitoDAO->dados());
+        $json_str = json_encode($dados);
+
+        return $json_str;
+
     }
     
-    public function dadosAtiv($versao) {
-        
-        $versao = str_replace("_", ".", $versao);
+    public function dadosAtiv() {
         
         $ativDAO = new AtivDAO();
         
-        if($versao >= 2.00){
+        $dados = array("dados"=>$ativDAO->dados());
+        $json_str = json_encode($dados);
 
-            $dados = array("dados"=>$ativDAO->dados());
-            $json_str = json_encode($dados);
-
-            return $json_str;
-        
-        }
+        return $json_str;
         
     }
     
-    public function dadosCaracOrganFito($versao) {
-        
-        $versao = str_replace("_", ".", $versao);
-        
+    public function dadosCaracOrganFito() {
+
         $caracOrganFitoDAO = new CaracOrganFitoDAO();
-        
-        if($versao >= 2.00){
-       
-            $dados = array("dados"=>$caracOrganFitoDAO->dados());
-            $json_str = json_encode($dados);
 
-            return $json_str;
-        
-        }
+        $dados = array("dados"=>$caracOrganFitoDAO->dados());
+        $json_str = json_encode($dados);
+
+        return $json_str;
         
     }
     
-    public function dadosEquip($versao) {
-        
-        $versao = str_replace("_", ".", $versao);
+    public function dadosEquip() {
         
         $equipDAO = new EquipDAO();
-        
-        if($versao >= 2.00){
-       
-            $dados = array("dados"=>$equipDAO->dados());
-            $json_str = json_encode($dados);
 
-            return $json_str;
-        
-        }
+        $dados = array("dados"=>$equipDAO->dados());
+        $json_str = json_encode($dados);
+
+        return $json_str;
         
     }
 
-    public function dadosFunc($versao) {
-        
-        $versao = str_replace("_", ".", $versao);
-        
-        $funcDAO = new FuncDAO();
-        
-        if($versao >= 2.00){
-        
-            $dados = array("dados"=>$funcDAO->dados());
-            $json_str = json_encode($dados);
+    public function dadosFunc() {
 
-            return $json_str;
-        
-        }
+        $funcDAO = new FuncDAO();
+
+        $dados = array("dados"=>$funcDAO->dados());
+        $json_str = json_encode($dados);
+
+        return $json_str;
         
     }
     
-    public function dadosLider($versao) {
-        
-        $versao = str_replace("_", ".", $versao);
+    public function dadosLider() {
         
         $liderDAO = new LiderDAO();
-        
-        if($versao >= 2.00){
 
-            $dados = array("dados"=>$liderDAO->dados());
-            $json_str = json_encode($dados);
+        $dados = array("dados"=>$liderDAO->dados());
+        $json_str = json_encode($dados);
 
-            return $json_str;
-        
-        }
+        return $json_str;
         
     }
     
     
-    public function dadosOS($versao, $info) {
+    public function dadosOS($info) {
 
-        $versao = str_replace("_", ".", $versao);
-        
-        if($versao >= 2.00){
-        
-            $osDAO = new OSDAO();
-            $rOSAtivDAO = new ROSAtivDAO();
+        $osDAO = new OSDAO();
+        $rOSAtivDAO = new ROSAtivDAO();
 
-            $dado = $info['dado'];
+        $dado = $info['dado'];
 
-            $dadosOS = array("dados" => $osDAO->dados($dado));
-            $resOS = json_encode($dadosOS);
+        $dadosOS = array("dados" => $osDAO->dados($dado));
+        $resOS = json_encode($dadosOS);
 
-            $dadosROSAtiv = array("dados" => $rOSAtivDAO->dados($dado));
-            $resROSAtiv = json_encode($dadosROSAtiv);
+        $dadosROSAtiv = array("dados" => $rOSAtivDAO->dados($dado));
+        $resROSAtiv = json_encode($dadosROSAtiv);
 
-            return $resOS . "#" . $resROSAtiv;
-        
-        }
+        return $resOS . "#" . $resROSAtiv;
         
     }
     
-    public function dadosOrganFito($versao) {
+    public function dadosOrganFito() {
 
-        $versao = str_replace("_", ".", $versao);
-        
         $organFitoDAO = new OrganFitoDAO();
-        
-        if($versao >= 2.00){
-        
-            $dados = array("dados" => $organFitoDAO->dados());
-            $resOS = json_encode($dados);
-            return $resOS;
-        
-        }
-                
+
+        $dados = array("dados" => $organFitoDAO->dados());
+        $resOS = json_encode($dados);
+        return $resOS;
+             
     }
     
-    public function dadosParada($versao) {
-        
-        $versao = str_replace("_", ".", $versao);
-        
+    public function dadosParada() {
+
         $paradaDAO = new ParadaDAO();
-        
-        if($versao >= 2.00){
-        
-            $dados = array("dados"=>$paradaDAO->dados());
-            $json_str = json_encode($dados);
 
-            return $json_str;
-        
-        }
+        $dados = array("dados"=>$paradaDAO->dados());
+        $json_str = json_encode($dados);
+
+        return $json_str;
         
     }
     
-     public function dadosRFuncaoAtivPar($versao) {
-        
-        $versao = str_replace("_", ".", $versao);
-        
+     public function dadosRFuncaoAtivPar() {
+
         $rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
-        
-        if($versao >= 2.00){
-        
-            $dados = array("dados"=>$rFuncaoAtivParDAO->dados());
-            $json_str = json_encode($dados);
 
-            return $json_str;
-        
-        }
+        $dados = array("dados"=>$rFuncaoAtivParDAO->dados());
+        $json_str = json_encode($dados);
+
+        return $json_str;
         
     }
     
-    public function dadosROSAtiv($versao) {
-        
-        $versao = str_replace("_", ".", $versao);
+    public function dadosROSAtiv() {
         
         $rOSAtivDAO = new ROSAtivDAO();
 
-        if($versao >= 2.00){
-        
-            $dados = array("dados"=>$rOSAtivDAO->dados());
-            $json_str = json_encode($dados);
+        $dados = array("dados"=>$rOSAtivDAO->dados());
+        $json_str = json_encode($dados);
 
-            return $json_str;
+        return $json_str;
 
-        }
-        
     }
     
-    public function dadosROCAFito($versao) {
-        
-        $versao = str_replace("_", ".", $versao);
-        
+    public function dadosROCAFito() {
+
         $rOCAFitoDAO = new ROCAFitoDAO();
 
-        if($versao >= 2.00){
+        $dados = array("dados"=>$rOCAFitoDAO->dados());
+        $json_str = json_encode($dados);
 
-            $dados = array("dados"=>$rOCAFitoDAO->dados());
-            $json_str = json_encode($dados);
-
-            return $json_str;
-        
-        }
+        return $json_str;
         
     }
     
-    public function dadosTalhao($versao) {
+    public function dadosTalhao() {
       
-        $versao = str_replace("_", ".", $versao);
-        
         $talhaoDAO = new TalhaoDAO();
 
-        if($versao >= 2.00){
-        
-            $dados = array("dados"=>$talhaoDAO->dados());
-            $json_str = json_encode($dados);
+        $dados = array("dados"=>$talhaoDAO->dados());
+        $json_str = json_encode($dados);
 
-            return $json_str;
-        
-        }
+        return $json_str;
         
     }
     
-    public function dadosTipoApont($versao) {
+    public function dadosTipoApont() {
       
-        $versao = str_replace("_", ".", $versao);
-        
         $tipoApontDAO = new TipoApontDAO();
-        
-        if($versao >= 2.00){
-        
-            $dados = array("dados"=>$tipoApontDAO->dados());
-            $json_str = json_encode($dados);
 
-            return $json_str;
-        
-        }
+        $dados = array("dados"=>$tipoApontDAO->dados());
+        $json_str = json_encode($dados);
+
+        return $json_str;
         
     }
     
-    public function dadosTurma($versao) {
-        
-        $versao = str_replace("_", ".", $versao);
+    public function dadosTurma() {
         
         $turmaDAO = new TurmaDAO();
         
-        if($versao >= 2.00){
+        $dados = array("dados"=>$turmaDAO->dados());
+        $json_str = json_encode($dados);
 
-            $dados = array("dados"=>$turmaDAO->dados());
-            $json_str = json_encode($dados);
-
-            return $json_str;
-        
-        }
+        return $json_str;
         
     }
     

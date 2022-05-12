@@ -5,7 +5,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require_once('../model/dao/LogDAO.class.php');
 require_once('../model/dao/BoletimDAO.class.php');
 require_once('../model/dao/ApontDAO.class.php');
 require_once('../model/dao/AlocaFuncDAO.class.php');
@@ -17,10 +16,9 @@ require_once('../model/dao/AlocaFuncDAO.class.php');
 class RuricolaCTR {
     //put your code here
 
-    public function salvarDados($info, $pagina) {
+    public function salvarDados($info) {
 
         $dados = $info['dado'];
-        $this->salvarLog($dados, $pagina);
 
         $pos1 = strpos($dados, "_") + 1;
         $pos2 = strpos($dados, "|") + 1;
@@ -40,11 +38,6 @@ class RuricolaCTR {
         $ret = $this->salvarBolFechado($dadosBoletim, $dadosAponta, $dadosAlocaFunc);
 
         return $ret;
-    }
-
-    private function salvarLog($dados, $pagina) {
-        $logDAO = new LogDAO();
-        $logDAO->salvarDados($dados, $pagina);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////

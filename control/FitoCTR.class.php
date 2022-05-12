@@ -15,10 +15,9 @@ require_once('../model/dao/RespFitoDAO.class.php');
  */
 class FitoCTR {
     
-    public function salvarDados($info, $pagina) {
+    public function salvarDados($info) {
 
         $dados = $info['dado'];
-        $this->salvarLog($dados, $pagina);
 
         $pos1 = strpos($dados, "_") + 1;
 
@@ -36,11 +35,6 @@ class FitoCTR {
         return $ret;
     }
 
-    private function salvarLog($dados, $pagina) {
-        $logDAO = new LogDAO();
-        $logDAO->salvarDados($dados, $pagina);
-    }
-    
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private function salvarCabec($dadosCabec, $dadosResp) {

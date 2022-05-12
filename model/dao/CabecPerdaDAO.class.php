@@ -6,7 +6,6 @@
  * and open the template in the editor.
  */
 require_once('../dbutil/Conn.class.php');
-require_once('../model/dao/AjusteDataHoraDAO.class.php');
 /**
  * Description of CabecPerdaDAO
  *
@@ -88,7 +87,7 @@ class CabecPerdaDAO extends Conn {
                 . " , " . $cabec->osCabecPerda
                 . " , " . $cabec->equipCabecPerda
                 . " , " . $cabec->statusCabecPerda
-                . " , " . $ajusteDataHoraDAO->dataHoraGMT($cabec->dthrCabecPerda)
+                . " , TO_DATE('" . $cabec->dthrCabecPerda . "','DD/MM/YYYY HH24:MI')"
                 . " , TO_DATE('" . $cabec->dthrCabecPerda . "','DD/MM/YYYY HH24:MI')"
                 . " , SYSDATE "
                 . " )";

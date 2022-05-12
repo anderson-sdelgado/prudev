@@ -15,11 +15,9 @@ require_once('../model/dao/AmostraSoqueiraDAO.class.php');
  */
 class SoqueiraCTR {
 
-    public function salvarDados($info, $pagina) {
+    public function salvarDados($info) {
 
         $dados = $info['dado'];
-        $this->salvarLog($dados, $pagina);
-
         $pos1 = strpos($dados, "_") + 1;
 
         $cabec = substr($dados, 0, ($pos1 - 1));
@@ -36,11 +34,6 @@ class SoqueiraCTR {
         return $ret;
     }
 
-    private function salvarLog($dados, $pagina) {
-        $logDAO = new LogDAO();
-        $logDAO->salvarDados($dados, $pagina);
-    }
-    
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private function salvarCabec($dadosCabec, $dadosAmostra) {
