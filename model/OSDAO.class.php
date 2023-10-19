@@ -7,12 +7,11 @@
  */
 require_once ('../dbutil/Conn.class.php');
 /**
- * Description of CaracOrganismoDAO
+ * Description of OSDAO
  *
  * @author anderson
  */
-class CaracOrganFitoDAO extends Conn {
-    //put your code here
+class OSDAO extends Conn {
     
     /** @var PDOStatement */
     private $Read;
@@ -20,14 +19,20 @@ class CaracOrganFitoDAO extends Conn {
     /** @var PDO */
     private $Conn;
 
-    public function dados() {
+    
+    public function dados($nroOS) {
 
         $select = " SELECT DISTINCT "
-                    . " GRCARACORG_ID AS \"idCaracOrgan\" "
-                    . " , CD AS \"codCaracOrgan\" "
-                    . " , CARACTER(DESCR) AS \"descrCaracOrgan\" "
-                . " FROM "
-                    . " USINAS.GR_CARAC_ORGAN ";
+                        . " NRO_OS AS \"nroOS\" "
+                        . " , NVL(PROPRAGR_ID, 0) AS \"idSecao\" "
+                        . " , NVL(PROPRAGR_CD, 0) AS \"codSecao\" "
+                        . " , NVL(PROPRAGR_DESCR, 'NULO') AS \"descrSecao\" "
+                        . " , NVL(FRENTE_ID, 0) AS \"idFrente\" "
+                        . " , NVL(FRENTE_DESCR, 'NULO') AS \"descrFrente\" "
+                    . " FROM "
+                        . " USINAS.V_SIMOVA_OS_MANUAL "
+                    . " WHERE "
+                        . " NRO_OS = " . $nroOS;
         
         $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);
@@ -36,7 +41,6 @@ class CaracOrganFitoDAO extends Conn {
         $result = $this->Read->fetchAll();
 
         return $result;
-        
     }
     
 }

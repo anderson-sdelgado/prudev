@@ -5,9 +5,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require_once('../model/dao/BoletimDAO.class.php');
-require_once('../model/dao/ApontDAO.class.php');
-require_once('../model/dao/AlocaFuncDAO.class.php');
+require_once('../model/BoletimDAO.class.php');
+require_once('../model/ApontDAO.class.php');
+require_once('../model/AlocaFuncDAO.class.php');
 /**
  * Description of RuricolaCTR
  *

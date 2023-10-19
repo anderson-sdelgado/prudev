@@ -5,14 +5,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require_once('../dbutil/Conn.class.php');
+require_once ('../dbutil/Conn.class.php');
 /**
- * Description of EquipDAO
+ * Description of ParadaDAO
  *
  * @author anderson
  */
-class EquipDAO extends Conn {
-    
+class ParadaDAO extends Conn {
+
     /** @var PDOStatement */
     private $Read;
 
@@ -22,14 +22,14 @@ class EquipDAO extends Conn {
     public function dados() {
 
         $select = " SELECT "
-                        . " E.EQUIP_ID AS \"idEquip\" "
-                        . " , E.NRO_EQUIP AS \"nroEquip\" "
-                        . " , E.CLASSOPER_CD AS \"codClasseEquip\" "
-                        . " , CARACTER(E.CLASSOPER_DESCR) AS \"descrClasseEquip\" "
-                    . " FROM "
-                        . " V_EQUIP E "
-                    . " WHERE  "
-                        . " E.CLASSOPER_CD = 2 ";
+                    . " MOTPARADMO_ID AS \"idParada\" "
+                    . " , CD AS \"codParada\" "
+                    . " , CARACTER(DESCR) AS \"descrParada\" "
+                . " FROM "
+                    . " USINAS.MOTIV_PARAD_MO "
+                . " ORDER BY "
+                    . " CD "
+                . " ASC ";
 
         $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);
@@ -39,5 +39,5 @@ class EquipDAO extends Conn {
 
         return $result;
     }
-    
+
 }

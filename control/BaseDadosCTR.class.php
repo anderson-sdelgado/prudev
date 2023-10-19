@@ -5,21 +5,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require_once('../model/dao/AtivDAO.class.php');
-require_once('../model/dao/AmostraFitoDAO.class.php');
-require_once('../model/dao/CaracOrganFitoDAO.class.php');
-require_once('../model/dao/EquipDAO.class.php');
-require_once('../model/dao/FuncDAO.class.php');
-require_once('../model/dao/LiderDAO.class.php');
-require_once('../model/dao/OSDAO.class.php');
-require_once('../model/dao/OrganFitoDAO.class.php');
-require_once('../model/dao/ParadaDAO.class.php');
-require_once('../model/dao/RFuncaoAtivParDAO.class.php');
-require_once('../model/dao/ROCAFitoDAO.class.php');
-require_once('../model/dao/ROSAtivDAO.class.php');
-require_once('../model/dao/TalhaoDAO.class.php');
-require_once('../model/dao/TipoApontDAO.class.php');
-require_once('../model/dao/TurmaDAO.class.php');
+require_once('../control/AtualAplicCTR.class.php');
+require_once('../model/AtivDAO.class.php');
+require_once('../model/AtualAplicDAO.class.php');
+require_once('../model/FuncDAO.class.php');
+require_once('../model/LiderDAO.class.php');
+require_once('../model/OSDAO.class.php');
+require_once('../model/ParadaDAO.class.php');
+require_once('../model/RFuncaoAtivParDAO.class.php');
+require_once('../model/ROSAtivDAO.class.php');
+require_once('../model/TalhaoDAO.class.php');
+require_once('../model/TipoApontDAO.class.php');
+require_once('../model/TurmaDAO.class.php');
 /**
  * Description of BaseDadosCTR
  *
@@ -27,69 +24,55 @@ require_once('../model/dao/TurmaDAO.class.php');
  */
 class BaseDadosCTR {
     
-    public function dadosAmostraFito() {
+    public function dadosAtiv($info) {
 
-        $amostraFitoDAO = new AmostraFitoDAO();
-
-        $dados = array("dados"=>$amostraFitoDAO->dados());
-        $json_str = json_encode($dados);
-
-        return $json_str;
-
-    }
-    
-    public function dadosAtiv() {
+        $atualAplicCTR = new AtualAplicCTR();
         
-        $ativDAO = new AtivDAO();
+        if($atualAplicCTR->verifToken($info)){
         
-        $dados = array("dados"=>$ativDAO->dados());
-        $json_str = json_encode($dados);
+            $ativDAO = new AtivDAO();
 
-        return $json_str;
+            $dados = array("dados"=>$ativDAO->dados());
+            $json_str = json_encode($dados);
+
+            return $json_str;
+        
+        }
         
     }
     
-    public function dadosCaracOrganFito() {
 
-        $caracOrganFitoDAO = new CaracOrganFitoDAO();
+    public function dadosFunc($info) {
 
-        $dados = array("dados"=>$caracOrganFitoDAO->dados());
-        $json_str = json_encode($dados);
+        $atualAplicCTR = new AtualAplicCTR();
+        
+        if($atualAplicCTR->verifToken($info)){
 
-        return $json_str;
+            $funcDAO = new FuncDAO();
+
+            $dados = array("dados"=>$funcDAO->dados());
+            $json_str = json_encode($dados);
+
+            return $json_str;
+        
+        }
         
     }
     
-    public function dadosEquip() {
+    public function dadosLider($info) {
+
+        $atualAplicCTR = new AtualAplicCTR();
         
-        $equipDAO = new EquipDAO();
-
-        $dados = array("dados"=>$equipDAO->dados());
-        $json_str = json_encode($dados);
-
-        return $json_str;
+        if($atualAplicCTR->verifToken($info)){
         
-    }
+            $liderDAO = new LiderDAO();
 
-    public function dadosFunc() {
+            $dados = array("dados"=>$liderDAO->dados());
+            $json_str = json_encode($dados);
 
-        $funcDAO = new FuncDAO();
-
-        $dados = array("dados"=>$funcDAO->dados());
-        $json_str = json_encode($dados);
-
-        return $json_str;
+            return $json_str;
         
-    }
-    
-    public function dadosLider() {
-        
-        $liderDAO = new LiderDAO();
-
-        $dados = array("dados"=>$liderDAO->dados());
-        $json_str = json_encode($dados);
-
-        return $json_str;
+        }
         
     }
     
@@ -98,103 +81,131 @@ class BaseDadosCTR {
 
         $osDAO = new OSDAO();
         $rOSAtivDAO = new ROSAtivDAO();
+        $atualAplicDAO = new AtualAplicDAO();
 
-        $dado = $info['dado'];
+        $jsonObj = json_decode($info['dado']);
+        $dados = $jsonObj->dados;
 
-        $dadosOS = array("dados" => $osDAO->dados($dado));
-        $resOS = json_encode($dadosOS);
+        foreach ($dados as $d) {
+            $nroOS = $d->nroOS;
+            $token = $d->token;
+        }
 
-        $dadosROSAtiv = array("dados" => $rOSAtivDAO->dados($dado));
-        $resROSAtiv = json_encode($dadosROSAtiv);
+        $v = $atualAplicDAO->verToken($token);
+        
+        if ($v > 0) {
 
-        return $resOS . "#" . $resROSAtiv;
+            $dadosOS = array("dados" => $osDAO->dados($nroOS));
+            $resOS = json_encode($dadosOS);
+
+            $dadosROSAtiv = array("dados" => $rOSAtivDAO->dados($nroOS));
+            $resROSAtiv = json_encode($dadosROSAtiv);
+
+            return $resOS . "#" . $resROSAtiv;
+        
+        }
         
     }
     
-    public function dadosOrganFito() {
+    public function dadosParada($info) {
 
-        $organFitoDAO = new OrganFitoDAO();
+        $atualAplicCTR = new AtualAplicCTR();
+        
+        if($atualAplicCTR->verifToken($info)){
 
-        $dados = array("dados" => $organFitoDAO->dados());
-        $resOS = json_encode($dados);
-        return $resOS;
-             
-    }
-    
-    public function dadosParada() {
+            $paradaDAO = new ParadaDAO();
 
-        $paradaDAO = new ParadaDAO();
+            $dados = array("dados"=>$paradaDAO->dados());
+            $json_str = json_encode($dados);
 
-        $dados = array("dados"=>$paradaDAO->dados());
-        $json_str = json_encode($dados);
-
-        return $json_str;
+            return $json_str;
+        
+        }
         
     }
     
-     public function dadosRFuncaoAtivPar() {
+     public function dadosRFuncaoAtivPar($info) {
 
-        $rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
+        $atualAplicCTR = new AtualAplicCTR();
+        
+        if($atualAplicCTR->verifToken($info)){
 
-        $dados = array("dados"=>$rFuncaoAtivParDAO->dados());
-        $json_str = json_encode($dados);
+            $rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
 
-        return $json_str;
+            $dados = array("dados"=>$rFuncaoAtivParDAO->dados());
+            $json_str = json_encode($dados);
+
+            return $json_str;
+        
+        }
         
     }
     
-    public function dadosROSAtiv() {
+    public function dadosROSAtiv($info) {
+
+        $atualAplicCTR = new AtualAplicCTR();
         
-        $rOSAtivDAO = new ROSAtivDAO();
+        if($atualAplicCTR->verifToken($info)){
+        
+            $rOSAtivDAO = new ROSAtivDAO();
 
-        $dados = array("dados"=>$rOSAtivDAO->dados());
-        $json_str = json_encode($dados);
+            $dados = array("dados"=>$rOSAtivDAO->dados());
+            $json_str = json_encode($dados);
 
-        return $json_str;
+            return $json_str;
+        
+        }
 
     }
     
-    public function dadosROCAFito() {
+    public function dadosTalhao($info) {
 
-        $rOCAFitoDAO = new ROCAFitoDAO();
-
-        $dados = array("dados"=>$rOCAFitoDAO->dados());
-        $json_str = json_encode($dados);
-
-        return $json_str;
+        $atualAplicCTR = new AtualAplicCTR();
         
-    }
-    
-    public function dadosTalhao() {
+        if($atualAplicCTR->verifToken($info)){
       
-        $talhaoDAO = new TalhaoDAO();
+            $talhaoDAO = new TalhaoDAO();
 
-        $dados = array("dados"=>$talhaoDAO->dados());
-        $json_str = json_encode($dados);
+            $dados = array("dados"=>$talhaoDAO->dados());
+            $json_str = json_encode($dados);
 
-        return $json_str;
+            return $json_str;
+        
+        }
         
     }
     
-    public function dadosTipoApont() {
+    public function dadosTipoApont($info) {
+
+        $atualAplicCTR = new AtualAplicCTR();
+        
+        if($atualAplicCTR->verifToken($info)){
       
-        $tipoApontDAO = new TipoApontDAO();
+            $tipoApontDAO = new TipoApontDAO();
 
-        $dados = array("dados"=>$tipoApontDAO->dados());
-        $json_str = json_encode($dados);
+            $dados = array("dados"=>$tipoApontDAO->dados());
+            $json_str = json_encode($dados);
 
-        return $json_str;
+            return $json_str;
+        
+        }
         
     }
     
-    public function dadosTurma() {
-        
-        $turmaDAO = new TurmaDAO();
-        
-        $dados = array("dados"=>$turmaDAO->dados());
-        $json_str = json_encode($dados);
+    public function dadosTurma($info) {
 
-        return $json_str;
+        $atualAplicCTR = new AtualAplicCTR();
+        
+        if($atualAplicCTR->verifToken($info)){
+        
+            $turmaDAO = new TurmaDAO();
+
+            $dados = array("dados"=>$turmaDAO->dados());
+            $json_str = json_encode($dados);
+
+            return $json_str;
+        
+        }
         
     }
     

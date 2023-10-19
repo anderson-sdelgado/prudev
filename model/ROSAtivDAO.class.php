@@ -19,7 +19,7 @@ class ROSAtivDAO extends Conn {
     /** @var PDO */
     private $Conn;
 
-    public function dados($os) {
+    public function dados($nroOS) {
 
         $select = " SELECT "
                 . " ROWNUM AS \"idROSAtiv\" "
@@ -28,7 +28,7 @@ class ROSAtivDAO extends Conn {
                 . " FROM "
                     . " USINAS.V_SIMOVA_OS_MANUAL "
                 . " WHERE "
-                    . " NRO_OS = " . $os;
+                    . " NRO_OS = " . $nroOS;
         
         $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);
@@ -40,7 +40,7 @@ class ROSAtivDAO extends Conn {
         
     }
     
-    public function verif($os) {
+    public function verif($nroOS) {
 
         $select = " SELECT "
                     . " ROWNUM AS \"idROSAtiv\" "
@@ -49,7 +49,7 @@ class ROSAtivDAO extends Conn {
                 . " FROM "
                     . " USINAS.V_SIMOVA_OS_MANUAL "
                 . " WHERE "
-                    . " NRO_OS = " . $os;
+                    . " NRO_OS = " . $nroOS;
         
         $this->Conn = parent::getConn();
         $this->Read = $this->Conn->prepare($select);

@@ -12,9 +12,8 @@ require_once ('../dbutil/Conn.class.php');
  * @author anderson
  */
 class FuncDAO extends Conn {
-    //put your code here
     
-        /** @var PDOStatement */
+    /** @var PDOStatement */
     private $Read;
 
     /** @var PDO */
